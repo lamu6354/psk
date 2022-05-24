@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:f="http://java.sun.com/jsf/core"
+>
+<h:head/>
+<h:body>
+    <h2>#{updateCarDetails.car.carModel}</h2>
+    <h:form>
+        <h:outputText value="License Number: "/>
+        <h:inputText a:placeholder="Enter the value" value="#{updateCarDetails.car.licenseNumber}" required="true" />
+        <h:commandButton value="update" action="#{updateCarDetails.updateLicenseNumber()}">
+            <f:param name="licenseNumber" value="#{updateCarDetails.car.licenseNumber}" />
+        </h:commandButton>
+        <h:outputText value="Value was already modified by other user. If you want to override it - try again" rendered="#{param['error'] == 'optimistic-lock-exception'}" />
+    </h:form>
+
+    <h:form>
+        <h:outputText value="#{generateLicenseNumber.generationStatus}" />
+        <h:commandButton value="Generate License Number" disabled="#{generateLicenseNumber.generationRunning}" action="#{generateLicenseNumber.generateNewLicenseNumber()}">
+            <f:param name="licenseNumber" value="#{updateCarDetails.car.id}" />
+        </h:commandButton>
+    </h:form>
+    <h:link outcome="index" value="Back to home page"/>
+</h:body>
+</html>

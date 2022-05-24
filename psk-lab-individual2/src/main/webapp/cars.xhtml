@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:f="http://java.sun.com/jsf/core">
+<h:head/>
+<h:body>
+    <h2>Cars being fixed in #{carForAutoservice.autoservice.title} autoservice:</h2>
+
+    <table border="1">
+        <tr>
+            <th>Car Model</th>
+            <th>License Number</th>
+        </tr>
+        <ui:repeat value="#{carsForAutoservice.autoservice.cars}" var="car">
+            <tr>
+                <td><h:link value="#{car.carModel}" outcome="carDetails?licenseNumber=#{car.id}"/></td>
+                <td>#{car.licenseNumber}</td>
+            </tr>
+        </ui:repeat>
+    </table>
+    <h:form>
+        <label>Car Model: </label>
+        <h:inputText a:placeholder="name" value="#{carsForAutoservice.carToCreate.carModel}" required="true" />
+        <h:commandButton value="Add car to the autoservice" action="#{carsForAutoservice.createCar}" >
+            <f:param name="autoserviceId" value="#{carsForAutoservice.autoservice.id}" />
+        </h:commandButton>
+    </h:form>
+
+    <h2>Add mechanic to this autoservice:</h2>
+    <h:form>
+        <label>Mechanic name: </label>
+        <h:inputText a:placeholder="name" value="#{carsForAutoservice.mechanicToAdd.name}" required="true" />
+        <h:commandButton value="Add mechanic to the autoservice" action="#{carsForAutoservice.createMechanic}" >
+            <f:param name="autoserviceId" value="#{carsForAutoservice.autoservice.id}" />
+        </h:commandButton>
+    </h:form>
+
+    <h:form>
+        <h2>Add mechanic from dropdown:</h2>
+        <label>Mechanic name:</label>
+        <h:selectOneMenu title="Available mechanics" value="#{carsForAutoservice.mechanicToAdd}" converter="#{mechanicConverter}">
+            <f:selectItems value="#{carsForAutoservice.allMechanics}" var="mechanic" itemValue="#{mechanic.label}" />
+        </h:selectOneMenu>
+
+        <h:commandButton value="Add mechanic to the autoservice" action="#{carsForAutoservice.createMechanicFromDropdown}" >
+            <f:param name="autoserviceId" value="#{carsForAutoservice.autoservice.id}" />
+        </h:commandButton>
+    </h:form>
+
+
+    <h:link outcome="index" value="Back to autoservices page"/>
+
+</h:body>
+</html>

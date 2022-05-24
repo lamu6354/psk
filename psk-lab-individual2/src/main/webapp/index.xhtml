@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+>
+<h:head/>
+<h:body>
+    <h2>Autoservices:</h2>
+    <ol>
+        <ui:repeat value="#{autoservices.allAutoservices}" var="autoservice">
+            <li><h:link value="#{autoservice.title}" outcome="/cars?autoserviceId=#{autoservice.id}"/></li>
+            <span>Mechanics:</span>
+            <ul>
+                <ui:repeat value="#{autoservice.mechanics}" var="mechanic">
+                    <li>#{mechanic.name}</li>
+                </ui:repeat>
+            </ul>
+        </ui:repeat>
+    </ol>
+<br/>
+<br/>
+    <h:form>
+        <label>Autoservice title:</label>
+        <h:inputText value="#{autoservices.autoserviceToCreate.title}" required="true" />
+        <h:commandButton value="Add new autoservice" action="#{autoservices.createAutoservice}" />
+    </h:form>
+
+    <h2>Mechanics:</h2>
+    <ol>
+        <ui:repeat value="#{mechanics.allMechanics}" var="mechanic">
+            <li>#{mechanic.name}</li>
+            <span>Autoservices:</span>
+            <ul>
+                <ui:repeat value="#{mechanic.autoservices}" var="autoservice">
+                    <li>#{autoservice.title}</li>
+                </ui:repeat>
+            </ul>
+        </ui:repeat>
+    </ol>
+
+    <h:link outcome="myBatis/autoservices" value="MyBatis implementation"/>
+
+</h:body>
+</html>
